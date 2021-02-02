@@ -3,6 +3,7 @@ package com.freddie.todoapi;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,13 +24,15 @@ public class TaskController {
 
     @GetMapping("/all")
     public List<Task> getAll() {
-        List<Task> tasks = this.taskRepository.findAll();
+        List<Task> tasks = this.taskRepository.findAllByUsername("ankouaeval@gmail.com");
 
         return tasks;
     }
 
     @PostMapping
     public void insert(@RequestBody Task task) {
+        final String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        task.setUsername(username);
         this.taskRepository.insert(task);
     }
 

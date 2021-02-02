@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private TaskRepository taskRepository;
 
+    public UserController(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
+
     @GetMapping("/user/tasks")
     public List<Task> tasks(Principal principal) {
         System.out.println("Getting Tasks for: " + principal.getName().toString());
-        List<Task> tasks = taskRepository.findAllByUsername(principal.getName().toString());
+        final String username = principal.getName();
+        List<Task> tasks = this.taskRepository.findAllByUsername(username);
         if (tasks.isEmpty()) {
             return List.of();
         } else {
