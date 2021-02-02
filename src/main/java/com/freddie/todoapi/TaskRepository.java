@@ -3,6 +3,8 @@ package com.freddie.todoapi;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +16,9 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     List<Task> findByTaskDone(boolean taskDone);
 
-    List<Task> findAllByUsername(String username);
+    List<Task> findByUsername(String username);
+
+    List<Task> findAllByUsername(String username, Pageable pageable);
+
+    Page<Task> findByTaskNameContaining(String taskName, Pageable pageable);
 }

@@ -22,13 +22,6 @@ public class TaskController {
         this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/all")
-    public List<Task> getAll() {
-        List<Task> tasks = this.taskRepository.findAllByUsername("ankouaeval@gmail.com");
-
-        return tasks;
-    }
-
     @PostMapping
     public void insert(@RequestBody Task task) {
         final String username = SecurityContextHolder.getContext().getAuthentication().getName();
