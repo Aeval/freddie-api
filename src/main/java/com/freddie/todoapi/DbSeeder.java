@@ -19,20 +19,25 @@ public class DbSeeder implements CommandLineRunner {
 
         Task t1 = new Task("Go food shopping", false, "2021-01-09", "ankouaeval@gmail.com");
         Task t2 = new Task("Feed the dog", false, "2021-01-09", "ankouaeval@gmail.com");
-        Task t3 = new Task("Workout", true, "2021-01-09", "ankouaeval@gmail.com");
-        Task t4 = new Task("Wash the dishes", false, "2021-01-09", "ankouaeval@gmail.com");
-        Task t5 = new Task("Do homework", true, "2021-01-09", "ankouaeval@gmail.com");
-        Task t6 = new Task("Finish my app", false, "2021-01-09", "ankouaeval@gmail.com");
+        Task t3 = new Task("Workout", true, "2021-02-09", "ankouaeval@gmail.com");
+        Task t4 = new Task("Wash the dishes", false, "2021-01-15", "ankouaeval@gmail.com");
+        Task t5 = new Task("Do homework", true, "2021-05-09", "ankouaeval@gmail.com");
+        Task t6 = new Task("Finish my app", false, "2021-01-02", "ankouaeval@gmail.com");
         Task t7 = new Task("Read a book", false, "2021-01-09", "ankouaeval@gmail.com");
-        Task t8 = new Task("Write a novel", true, "2021-01-09", "ankouaeval@gmail.com");
+        Task t8 = new Task("Write a novel", true, "2021-08-25", "ankouaeval@gmail.com");
         Task t9 = new Task("Figure out Spring Boot", true, "2021-01-09", "ankouaeval@gmail.com");
-        Task t10 = new Task("Build a new computer", false, "2021-01-09", "ankouaeval@gmail.com");
-        Task t11 = new Task("Go outside", false, "2021-01-09", "ankouaeval@gmail.com");
+        Task t10 = new Task("Build a new computer", false, "2021-03-04", "ankouaeval@gmail.com");
+        Task t11 = new Task("Go outside", false, "2021-05-10", "ankouaeval@gmail.com");
         Task t12 = new Task("Add a new task", true, "2021-01-09", "ankouaeval@gmail.com");
+        Task t13 = new Task("Write a novel", true, "2021-08-25", "user@gmail.com");
+        Task t14 = new Task("Figure out Spring Boot", true, "2021-01-09", "user@gmail.com");
+        Task t15 = new Task("Build a new computer", false, "2021-03-04", "user@gmail.com");
+        Task t16 = new Task("Go outside", false, "2021-05-10", "user@gmail.com");
+        Task t17 = new Task("Add a new task", true, "2021-01-09", "user@gmail.com");
 
         this.taskRepository.deleteAll();
 
-        List<Task> tasks = Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12);
+        List<Task> tasks = Arrays.asList(t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14, t15, t16, t17);
         this.taskRepository.saveAll(tasks);
 
         System.out.println("*************************");

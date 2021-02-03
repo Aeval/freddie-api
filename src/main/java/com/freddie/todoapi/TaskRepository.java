@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,7 +19,8 @@ public interface TaskRepository extends MongoRepository<Task, String> {
 
     List<Task> findByUsername(String username);
 
-    List<Task> findAllByUsername(String username, Pageable pageable);
+    @Query("{'username': ?#{[0]}, 'taskName': { $regex: ?#{[1]}, $options: 'i' }}")
+    List<Task> findAllByUsernameandContainsTaskName(String username, String taskName, Pageable pageable);
 
     Page<Task> findByTaskNameContaining(String taskName, Pageable pageable);
 }

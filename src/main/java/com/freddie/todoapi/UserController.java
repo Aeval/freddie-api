@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.util.MultiValueMap;
@@ -25,18 +27,22 @@ public class UserController {
 
         int pageIndex = Integer.parseInt(params.get("pageIndex").get(0));
         int pageSize = Integer.parseInt(params.get("pageSize").get(0));
-        System.out.println("Index: " + pageIndex + ", Size: " + pageSize);
+        String taskName = params.get("taskName").get(0);
+        String sortDirection = params.get("sortDirection").get(0);
+        System.out.println("name: " + taskName);
         System.out.println("Getting Tasks for: " + principal.getName().toString());
+        // Sort.by(Direction.ASC, "dueDate") : Sort.by(Direction.DESC, "dueDate");
 
         final String username = principal.getName();
 
         List<Task> list = this.taskRepository.findByUsername(username);
 
-        Pageable pageable = PageRequest.of(pageIndex, (pageSize == 1) ? list.size() : pageSize);
+        Pageable pageable = PageRequest.of(pageIndex, (pageSize == 1) ? list.size() : pageSize,
+                Sort.by(sortDirection.equals("asc") ? Direction.ASC : Direction.DESC, "dueDate"));
 
         System.out.println(pageable.toString());
 
-        List<Task> tasks = this.taskRepository.findAllByUsername(username, pageable);
+        List<Task> tasks = this.taskRepository.findAllByUsernameandContainsTaskName(username, taskName, pageable);
         System.out.println(tasks);
         if (tasks.isEmpty()) {
             return List.of();
