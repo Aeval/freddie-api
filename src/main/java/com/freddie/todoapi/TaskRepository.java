@@ -22,5 +22,9 @@ public interface TaskRepository extends MongoRepository<Task, String> {
     @Query("{'username': ?#{[0]}, 'taskName': { $regex: ?#{[1]}, $options: 'i' }}")
     List<Task> findAllByUsernameandContainsTaskName(String username, String taskName, Pageable pageable);
 
+    @Query("{'username': ?#{[0]}, 'taskName': { $regex: ?#{[1]}, $options: 'i' }, 'taskDone': ?#{[2]}}")
+    List<Task> findAllByUsernameandContainsTaskNameandTaskDone(String username, String taskName, Boolean taskDone,
+            Pageable pageable);
+
     Page<Task> findByTaskNameContaining(String taskName, Pageable pageable);
 }

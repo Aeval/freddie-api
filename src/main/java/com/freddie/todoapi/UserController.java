@@ -28,6 +28,8 @@ public class UserController {
         int pageIndex = Integer.parseInt(params.get("pageIndex").get(0));
         int pageSize = Integer.parseInt(params.get("pageSize").get(0));
         String taskName = params.get("taskName").get(0);
+        Boolean taskDone = params.get("taskDone").get(0) == "" ? null
+                : Boolean.parseBoolean(params.get("taskDone").get(0));
         String sortDirection = params.get("sortDirection").get(0);
         System.out.println("name: " + taskName);
         System.out.println("Getting Tasks for: " + principal.getName().toString());
@@ -42,7 +44,15 @@ public class UserController {
 
         System.out.println(pageable.toString());
 
-        List<Task> tasks = this.taskRepository.findAllByUsernameandContainsTaskName(username, taskName, pageable);
+        List<Task> tasks;
+
+        if (taskDone == null) {
+            tasks = this.taskRepository.findAllByUsernameandContainsTaskName(username, taskName, pageable);
+        } else {
+            tasks = this.taskRepository.findAllByUsernameandContainsTaskNameandTaskDone(username, taskName, taskDone,
+                    pageable);
+        }
+
         System.out.println(tasks);
         if (tasks.isEmpty()) {
             return List.of();
